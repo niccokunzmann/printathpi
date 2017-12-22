@@ -1,6 +1,8 @@
-# print At HPI
+# Print At HPI
 
-Print your documents at the Hasso-Platter-Institute in Potsdam.
+[![Docker Build Status](https://img.shields.io/docker/build/niccokunzmann/printathpi.svg)](https://hub.docker.com/r/niccokunzmann/printathpi/builds/)
+
+Print your documents at the Hasso-Platter-Institute in Potsdam. [**Try it out**][server]
 
 This service providas a web interface to print documents.
 
@@ -13,13 +15,14 @@ The minimal viable prduct works as follows:
 
 Hosting:
 - https
-- docker + automated build
+- docker + automated build, deployment every night, bei Nicco zu Hause
 
-Possible extensions:
+Extensions:
 
-- TXT, DOCX, DOC, SVG, HTML, JPEG, PNG, ...
-- simple curl interface (POST + BASIC)
-- multiple files upload
+- [X] JPEG, PNG, SVG
+- [ ] TXT, DOCX, DOC, HTML, ...
+- [ ] simple curl interface (POST + BASIC)
+- [X] multiple files upload
 
 Contribution
 ------------
@@ -72,3 +75,5 @@ The converter functions are in the convert.py file.
 It is quite easy to write those: They take an input .
 
 [py]: https://www.python.org/
+[server]: https://printathpi.quelltext.eu
+
