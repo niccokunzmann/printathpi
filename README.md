@@ -86,8 +86,10 @@ docker build --tag niccokunzmann/printathpi .
 And run the image using this command:
 
 ```
-docker run --rm niccokunzmann/printathpi
+docker run --rm -p8001:8001 niccokunzmann/printathpi
 ```
+
+Now, you can visit http://localhost:8001/.
 
 [py]: https://www.python.org/
 [server]: https://printathpi.quelltext.eu
