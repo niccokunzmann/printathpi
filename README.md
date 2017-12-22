@@ -3,10 +3,9 @@
 [![Docker Build Status](https://img.shields.io/docker/build/niccokunzmann/printathpi.svg)](https://hub.docker.com/r/niccokunzmann/printathpi/builds/)
 
 Print your documents at the Hasso-Platter-Institute in Potsdam. [**Try it out**][server]
-
 This service providas a web interface to print documents.
 
-The minimal viable prduct works as follows:
+The minimal viable product works as follows:
 
 1. The user opens a web interface
 2. The user selects a PDF file, HPI username and password
@@ -21,7 +20,7 @@ Extensions:
 
 - [X] JPEG, PNG, SVG
 - [ ] TXT, DOCX, DOC, HTML, ...
-- [ ] simple curl interface (POST + BASIC)
+- [ ] simple curl interface (POST + BASIC) for API usage
 - [X] multiple files upload
 
 Contribution
