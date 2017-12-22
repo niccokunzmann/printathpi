@@ -10,7 +10,9 @@ RUN useradd app
 RUN apt-get -y update && \
     apt-get -y install python3 python3-pip librsvg2-bin ghostscript imagemagick && \
     rm -rf /var/lib/apt/lists/*
-RUN pip install --no-cache --upgrade pip
+RUN python3 -m pip install virtualenv && \
+    virtualenv -p python3 ENV && \
+    source ENV/bin/activate
 RUN mkdir -p /app/printathpi/
 WORKDIR /app/
 COPY LICENSE /app/
