@@ -12,6 +12,8 @@ from os.path import basename
 from email.mime.application import MIMEApplication
 import re
 
+AuthenticationException = smtplib.SMTPAuthenticationError
+
 SUBJECT = "Print at HPI"
 TO_MAIL = "Mobile Print HPI <mobileprint@hpi.uni-potsdam.de>"
 REPO = "https://github.com/niccokunzmann/printathpi"
@@ -58,7 +60,7 @@ def send_mail(files, from_mail, password, to=TO_MAIL):
     msg['Subject'] = SUBJECT
     msg['From'] = from_mail
     msg['To'] = to
-    msg['Cc'] = to
+    msg['Cc'] = from_mail
     msg['User-Agent'] = __name__ + " " + REPO
     msg.preamble = PROGRAM_DESCRIPTION
 

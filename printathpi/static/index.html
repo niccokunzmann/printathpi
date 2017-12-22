@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Print at HPI</title>
+  </head>
+  <body>
+    <h1>Print at HPI</h1>
+    <p>
+      Hier kannst Du deine Dateien an die HPI-Drucker schicken.
+      Unterstützt werden PDF, JPG, PNG, SVG.
+    </p>
+    <form enctype='multipart/form-data' method='POST' action='/print'> 
+      <input type='file' name='files[]' multiple="multiple" />
+      <button type='submit'>Submit</button>
+    </form>
+    <p>
+      Du kannst den <a href="/source">Quelltext ansehen</a>.
+      Diese Software ist <a href="https://opensource.org/licenses/agpl-v3.html">freie Software</a>.
+      Wenn du Fehler beheben magst oder neue Funktionen und Formate
+      hinzufügen möchtest, ist das <a href="https://github.com/niccokunzmann/printathpi">auf
+      GitHub</a> möglich.
+      <a href="https://github.com/niccokunzmann/printathpi-issues">Anmerkungen hinterlassen</a>
+      kannst Du dort auch.
+    </p>
+  </body>
+</html>
+

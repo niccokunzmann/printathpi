@@ -53,5 +53,22 @@ source ENV/bin/activate
 python3 -m printathpi.app
 ```
 
+The server should be rachable at port 8001 under http://localhost:8001/
+
+Setup Conversions
+-----------------
+
+Different types of files can be converted.
+These are the installation instructions for those.
+
+- SVG  
+  `sudo apt-get install librsvg2-bin`  
+  Read more about this here: https://superuser.com/a/381128/164164
+- JPG, JPEG, PNG  
+  `sudo apt-get install ghostscript imagemagick`
+  Read more about this here: http://dev-random.net/convert-multiple-jpg-or-png-to-pdf-in-linux/
+
+The converter functions are in the convert.py file.
+It is quite easy to write those: They take an input .
 
 [py]: https://www.python.org/
