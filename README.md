@@ -73,6 +73,22 @@ These are the installation instructions for those.
 The converter functions are in the convert.py file.
 It is quite easy to write those: They take an input .
 
+Docker
+------
+
+You can install docker.
+Use this commands to build the image:
+
+```
+docker build --tag niccokunzmann/printathpi .
+```
+
+And run the image using this command:
+
+```
+docker run --rm niccokunzmann/printathpi
+```
+
 [py]: https://www.python.org/
 [server]: https://printathpi.quelltext.eu
 
