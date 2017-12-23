@@ -11,7 +11,7 @@ APPLICATION = 'PrintAtHPI'
 HERE = os.path.dirname(__file__) or os.getcwd()
 STATIC_BASE_PATH = os.path.join(HERE, "static")
 ZIP_PATH = "/" + APPLICATION + ".zip"
-REALM = "HPI E-Mail & Passwort"
+REALM = "HPI E-Mail & Passwort (z.B. Max.Mustermann@hpi.de oder Inge.Musterstudent@student.hpi.de)"
 NOT_AUTHENTICATED = "Could not authenticate."
 SEND_MAILS = True # set this to True/False if you want/ do not want to send emails
 

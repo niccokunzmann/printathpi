@@ -3,7 +3,7 @@
 [![Docker Build Status](https://img.shields.io/docker/build/niccokunzmann/printathpi.svg)](https://hub.docker.com/r/niccokunzmann/printathpi/builds/)
 
 Print your documents at the Hasso-Platter-Institute in Potsdam. [**Try it out**][server]
-This service providas a web interface to print documents.
+This service provides a web interface to print documents.
 
 The minimal viable product works as follows:
 
