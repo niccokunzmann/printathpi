@@ -19,7 +19,7 @@ def svg2pdf(file_format, content):
         return cp.stdout
 
 def png2pdf(file_format, content):
-    """Convert an png of jpeg image"""
+    """Convert a png or jpeg image"""
     with NamedTemporaryFile(suffix="." + file_format) as input_file:
         input_file.write(content)
         input_file.flush()
@@ -40,8 +40,9 @@ conversions = {"pdf":  pdf2pdf,
 def convert(filename, content):
     """Convert the file content to pdf.
     
-    Files which can not be converted will not be converted.
-    The Uniflow system sends a message if files can not be printed.
+    Files which cannot be converted will not be converted.
+    The Uniflow system sends a message if files cannot be printed,
+    so the user will know.
     """
     file_format = os.path.splitext(filename)[1][1:].lower()
     convert = conversions.get(file_format, pdf2pdf)
