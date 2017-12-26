@@ -107,13 +107,15 @@ your website.
 Form
 ----
 
-You can sumbmit multiple files as the `files[]` attribute of a form.
+You can submit multiple files as the `files[]` attribute of a form.
 For this you can add the following text to your HTML document.
 
     <form enctype='multipart/form-data' method='POST' action='https://printathpi.quelltext.eu/print'> 
       <input type='file' name='files[]' multiple="multiple" />
       <button type='submit'>Submit</button>
     </form>
+    
+When the user presses the submit button, the document will be printed.
 
 JavaScript
 ----------
@@ -124,10 +126,49 @@ You can embed a js file to include the print functionlity into your website:
 
 Then, you can use the `printAtHPI()` function:
 
-    printAtHPI({"filename.PDF": "... pdf content ..."});
+    printAtHPI({"filename.PDF": "... pdf content ..."}, username, password, onPrint, onError);
+
+- `{"filename.PDF": "... pdf content ..."}`  
+  Is a javascript object mapping file names to content.
+- `username` and `password`  
+  must be strings to authenticate or `null` to open the browser dialog.
+- `onPrint`  
+  is called with an event if the print is successful (Status 200).
+  ```
+  function onPrint(e) {
+    alert(e.target.responseText);
+  }
+  ```
+- `onError`  
+  is called when the print did not succeed with an event.
+  ```
+  function onError(e) {
+    if (e.target.status == 401) {
+      alert("Wrong username or password.");
+    } else {
+      alert("Could not print.");
+    }
+  }
+  ```
+
+cUrl
+----
+
+You can use the command line utility curl to print files without installing any driver.
+This counts for all files which can be converted.
+
+```
+curl -X POST                                          \
+     -F 'files[]=@example_files/logo.svg'             \
+     -u 'Johanna.Doe@student.hpi.de:JohannasPassword' \
+     https://printathpi.quelltext.eu/print
+```
+
+
 
 
 [py]: https://www.python.org/
 [server]: https://printathpi.quelltext.eu
 [convert]: https://github.com/niccokunzmann/printathpi/blob/master/printathpi/convert.py
+
 

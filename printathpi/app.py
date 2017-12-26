@@ -6,6 +6,7 @@ import sys
 import shutil
 from pprint import pprint
 from .convert import convert
+import json
 
 APPLICATION = 'PrintAtHPI'
 HERE = os.path.dirname(__file__) or os.getcwd()
@@ -14,6 +15,7 @@ ZIP_PATH = "/" + APPLICATION + ".zip"
 REALM = "HPI E-Mail & Passwort (z.B. Max.Mustermann@hpi.de oder Inge.Musterstudent@student.hpi.de)"
 NOT_AUTHENTICATED = "Could not authenticate."
 SEND_MAILS = True # set this to True/False if you want/ do not want to send emails
+DEFAULT_HOST_URL = "https://printathpi.quelltext.eu"
 
 @get('/static/<path:path>')
 def get_static_file(path):
@@ -42,6 +44,17 @@ def print_files():
 def get_source_redirect():
     """Download the source of this application."""
     redirect(ZIP_PATH)
+
+@get('/printathpi.js')
+def get_source_redirect():
+    """Download the source of this application."""
+    response.headers["content-type"] = "text/plain; charset=UTF-8"
+    with open(os.path.join(HERE, "static", "printathpi.js")) as printathpi:
+        content = printathpi.read()
+        url = "http://" + request.headers.get("host", DEFAULT_HOST_URL) + "/print"
+        
+        content += "var PRINT_AT_HPI_ENDPOINT = {};".format(json.dumps(url))
+        return content
 
 @get('/')
 def get_source_redirect():
