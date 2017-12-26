@@ -71,15 +71,9 @@ def get_source_redirect():
     redirect(ZIP_PATH)
 
 @get('/printathpi.js')
-def get_source_redirect():
-    """Download the source of this application."""
-    response.headers["content-type"] = "text/plain; charset=UTF-8"
-    with open(os.path.join(HERE, "static", "printathpi.js")) as printathpi:
-        content = printathpi.read()
-        url = "http://" + request.headers.get("host", DEFAULT_HOST_URL) + "/print"
-        
-        content += "var PRINT_AT_HPI_ENDPOINT = {};".format(json.dumps(url))
-        return content
+def printathpi_js():
+    """Return the source of the print file."""
+    redirect("/static/printathpi.js")
 
 @get('/')
 def get_source_redirect():
