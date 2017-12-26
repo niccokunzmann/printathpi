@@ -98,6 +98,35 @@ docker run --rm -p8001:8001 niccokunzmann/printathpi
 
 Now, you can visit http://localhost:8001/.
 
+API
+===
+
+The API of this print service allows you to print documents for HPI students directly from
+your website.
+
+Form
+----
+
+You can sumbmit multiple files as the `files[]` attribute of a form.
+For this you can add the following text to your HTML document.
+
+    <form enctype='multipart/form-data' method='POST' action='https://printathpi.quelltext.eu/print'> 
+      <input type='file' name='files[]' multiple="multiple" />
+      <button type='submit'>Submit</button>
+    </form>
+
+JavaScript
+----------
+
+You can embed a js file to include the print functionlity into your website:
+
+    <script type="text/javascript" async="" src="https://printathpi.quelltext.eu/printathpi.js"></script>
+
+Then, you can use the `printAtHPI()` function:
+
+    printAtHPI({"filename.PDF": "... pdf content ..."});
+
+
 [py]: https://www.python.org/
 [server]: https://printathpi.quelltext.eu
 [convert]: https://github.com/niccokunzmann/printathpi/blob/master/printathpi/convert.py
