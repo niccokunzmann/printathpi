@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from bottle import post, get, run, request, static_file, redirect, auth_basic, HTTPError, response
+from bottle import post, get, run, request, static_file, redirect, auth_basic, HTTPError, response, route
 from .send_mail import send_mail, is_valid_email, AuthenticationException
 import os
 import sys
@@ -25,9 +25,35 @@ def get_static_file(path):
 def check_hpi_credentials(user, password):
     return is_valid_email(user)
 
-@post('/print')
-@auth_basic(check_hpi_credentials, REALM, text=NOT_AUTHENTICATED)
+def enable_cors(fn):
+    # from https://stackoverflow.com/a/17262900
+    def _enable_cors(*args, **kwargs):
+        # set CORS headers
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token, authorization'
+
+        if request.method != 'OPTIONS':
+            # actual request; reply with the actual response
+            return fn(*args, **kwargs)
+
+    return _enable_cors
+    
+
+def pleaseAuthenticate():
+    err = HTTPError(401, NOT_AUTHENTICATED)
+    err.headers['WWW-Authenticate'] = 'Basic realm="{}"'.format(REALM)
+    err.headers['Access-Control-Allow-Origin'] = '*'
+    err.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, OPTIONS'
+    err.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token, authorization'
+    return err
+
+
+@route('/print', method=['OPTIONS', 'POST'])
+@enable_cors
 def print_files():
+    if not request.auth:
+        return pleaseAuthenticate()
     files = {file.filename + ".pdf": convert(file.filename, file.file.read())
              for file in request.files.getlist("files[]")}
     username, password = request.auth
@@ -35,9 +61,8 @@ def print_files():
         if SEND_MAILS:
             send_mail(files, username, password)
     except AuthenticationException:
-        err = HTTPError(401, NOT_AUTHENTICATED)
-        err.add_header('WWW-Authenticate', 'Basic realm="{}"'.format(REALM))
-        return err
+      return pleaseAuthenticate()
+    response.headers["Access-Control-Allow-Origin"] = "*"
     return "Folgende Dateien wurden{} gesendet: {}".format(" NICHT" * (not SEND_MAILS), ", ".join(files))
 
 @get('/source')
