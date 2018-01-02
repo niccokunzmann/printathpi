@@ -16,12 +16,7 @@ Hosting:
 - https
 - docker + automated build, deployment every night, bei Nicco zu Hause
 
-Extensions:
-
-- [X] JPEG, PNG, SVG
-- [ ] TXT, DOCX, DOC, HTML, ...
-- [ ] simple curl interface (POST + BASIC) for API usage
-- [X] multiple files upload
+For supported file formats, please see the [Conversions Section][conversions]
 
 Contribution
 ------------
@@ -59,6 +54,7 @@ The server should be reachable at port 8001 under http://localhost:8001/
 
 Setup Conversions
 -----------------
+[conversions]: #setup-conversions
 
 Different types of files can be converted.
 These are the installation instructions for those.
@@ -69,6 +65,8 @@ These are the installation instructions for those.
 - JPG, JPEG, PNG  
   `sudo apt-get install ghostscript imagemagick`  
   Read more about this here: http://dev-random.net/convert-multiple-jpg-or-png-to-pdf-in-linux/
+- bib, bmp, csv, dbf, dif, doc, doc6, doc95, docbook, docx, docx7, emf, eps, fodg, fodp, fods, fodt, gif, html, jpg, latex, mediawiki, met, odd, odg, odp, ods, odt, ooxml, otg, otp, ots, ott, pbm, pct, pdb, pdf, pgm, png, pot, potm, ppm, pps, ppt, pptx, psw, pwp, pxl, ras, rtf, sda, sdc, sdc3, sdc4, sdd, sdd3, sdd4, sdw, sdw3, sdw4, slk, stc, std, sti, stw, svg, svm, swf, sxc, sxd, sxd3, sxd5, sxi, sxw, text, tiff, txt, uop, uos, uot, vor, vor3, vor4, vor5, wmf, wps, xhtml, xls, xls5, xls95, xlsx, xlt, xlt5, xlt95, xpm  
+  `sudo apt-get install unoconv`
 
 The converter functions are in the [convert.py][convert] file.
 It is quite simple to write those: They take a file format like `"svg"` and the bytes of a
