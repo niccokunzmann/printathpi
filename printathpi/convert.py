@@ -1,6 +1,7 @@
 import os
 from tempfile import NamedTemporaryFile
 import subprocess
+import re
 
 def pdf2pdf(file_format, content):
     """Convert a pdf to a pdf file."""
@@ -14,9 +15,7 @@ def svg2pdf(file_format, content):
     with NamedTemporaryFile() as input_file:
         input_file.write(content)
         input_file.flush()
-        cp = subprocess.run(["rsvg-convert", "-f", "pdf", input_file.name],
-                            stdout=subprocess.PIPE, check=True)
-        return cp.stdout
+        return subprocess.check_output(["rsvg-convert", "-f", "pdf", input_file.name])
 
 def png2pdf(file_format, content):
     """Convert a png or jpeg image"""
@@ -25,17 +24,47 @@ def png2pdf(file_format, content):
         input_file.flush()
         with NamedTemporaryFile("rb", suffix=".pdf") as output_file:
             print("png2pdf", input_file.name, output_file.name)
-            cp = subprocess.run(["convert", input_file.name, output_file.name], check=True)
+            subprocess.check_call(["convert", input_file.name, output_file.name])
             return output_file.read()
 
 jpg2pdf = png2pdf
 
-conversions = {"pdf":  pdf2pdf,
-               "svg":  svg2pdf,
-               "jpg":  jpg2pdf,
-               "jpeg": jpg2pdf,
-               "png":  png2pdf,
-               }
+
+def unoconv2pdf(file_format, content):
+    """Convert a file to an pdf using unoconv.
+    
+    You can use 
+    
+        unoconv --show
+    
+    on the command line.
+    """
+    with NamedTemporaryFile(suffix="." + file_format) as input_file:
+        input_file.write(content)
+        input_file.flush()
+        return subprocess.check_output(["unoconv", "-f", "pdf", "--stdout", input_file.name])
+    
+
+def get_unoconv_conversions():
+    """get unoconv and all supported formats"""
+    process = subprocess.Popen(["unoconv", "--show"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if process.wait() != 0:
+        return {}
+    documentation = process.stdout.read().decode()
+    format_list = re.findall(r"\s+([a-z0-9]+)\s+-\s", documentation)
+    conversions = {}
+    for format in format_list:
+        conversions[format] = unoconv2pdf
+    return conversions
+
+conversions = get_unoconv_conversions()
+conversions.update({
+    "pdf":  pdf2pdf,
+    "svg":  svg2pdf,
+    "jpg":  jpg2pdf,
+    "jpeg": lambda *args: conversions["jpg"](*args),
+    "png":  png2pdf,
+})
 
 def convert(filename, content):
     """Convert the file content to pdf.
@@ -49,4 +78,6 @@ def convert(filename, content):
     print("convert {} with {}".format(filename, convert.__name__))
     return convert(file_format, content)
     
+if __name__ == "__main__":
+    print("Conversions: {}".format(", ".join(list(sorted(conversions.keys())))))
 

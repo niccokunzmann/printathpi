@@ -5,7 +5,7 @@ import os
 import sys
 import shutil
 from pprint import pprint
-from .convert import convert
+from .convert import convert, conversions
 import json
 
 APPLICATION = 'PrintAtHPI'
@@ -62,13 +62,25 @@ def print_files():
             send_mail(files, username, password)
     except AuthenticationException:
       return pleaseAuthenticate()
-    response.headers["Access-Control-Allow-Origin"] = "*"
     return "Folgende Dateien wurden{} gesendet: {}".format(" NICHT" * (not SEND_MAILS), ", ".join(files))
+
+@route('/topdf', method=['OPTIONS', 'POST'])
+@enable_cors
+def route_convert_to_pdf():
+    file = request.files.getlist("files[]")[0]
+    response.headers["Content-Type"] = "application/pdf"
+    response.headers["content-disposition"] ="attachment; filename=\"" + file.filename +"\""
+    content = file.file.read()
+    result = convert(file.filename, content)
+    assert result != content or file.filename.lower().endswith(".pdf")
+    return result
+
 
 @get('/source')
 def get_source_redirect():
     """Download the source of this application."""
     redirect(ZIP_PATH)
+
 
 @get('/printathpi.js')
 def printathpi_js():
@@ -89,4 +101,5 @@ def get_source():
     return static_file(path, root="/")
 
 if __name__ == "__main__":
+    print("Conversions to PDF: {}".format(", ".join(list(sorted(conversions.keys())))))
     run(host='', port=8001, debug=True, reload=True)

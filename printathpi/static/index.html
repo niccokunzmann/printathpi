@@ -5,16 +5,24 @@
     <title>Print at HPI</title>
     <!-- for test purposes include the /printathpi.js file -->
     <script type="text/javascript" async="" src="/printathpi.js"></script>
+    <script>
+    function toPDF() {
+      var form = document.getElementById("form");
+      form.action = "/topdf";
+      form.submit()
+    }
+    </script>
   </head>
   <body>
     <h1>Print @ HPI</h1>
     <p>
       Hier kannst Du Deine Dateien an die HPI-Drucker schicken.
-      Unterstützt werden PDF, JPG, PNG, SVG.
+      Unterstützt werden bib, <strong>bmp</strong>, csv, dbf, dif, <strong>doc</strong>, doc6, doc95, docbook, <strong>docx</strong>, docx7, emf, eps, fodg, fodp, fods, fodt, <strong>gif</strong>, html, jpeg, <strong>jpg</strong>, latex, mediawiki, met, odd, odg, odp, ods, odt, ooxml, otg, otp, ots, ott, pbm, pct, pdb, <strong>pdf</strong>, pgm, <strong>png</strong>, pot, potm, ppm, pps, <strong>ppt</strong>, <strong>pptx</strong>, psw, pwp, pxl, ras, rtf, sda, sdc, sdc3, sdc4, sdd, sdd3, sdd4, sdw, sdw3, sdw4, slk, stc, std, sti, stw, <strong>svg</strong>, svm, swf, sxc, sxd, sxd3, sxd5, sxi, sxw, <strong>text</strong>, tiff, <strong>txt</strong>, uop, uos, uot, vor, vor3, vor4, vor5, wmf, wps, xhtml, <strong>xls</strong>, xls5, xls95, <strong>xlsx</strong>, xlt, xlt5, xlt95, xpm.
     </p>
-    <form enctype='multipart/form-data' method='POST' action='/print'> 
+    <form enctype='multipart/form-data' method='POST' action='/print' id="form"> 
       <input type='file' name='files[]' multiple="multiple" />
-      <button type='submit'>Submit</button>
+      <button type='submit'>Print</button>
+      <button type='button' onclick="javascript:toPDF()">PDF</button>
     </form>
     <p>
       Du kannst den <a href="/source">Quelltext ansehen</a>.
