@@ -66,7 +66,8 @@ These are the installation instructions for those.
   `sudo apt-get install ghostscript imagemagick`  
   Read more about this here: http://dev-random.net/convert-multiple-jpg-or-png-to-pdf-in-linux/
 - bib, bmp, csv, dbf, dif, doc, doc6, doc95, docbook, docx, docx7, emf, eps, fodg, fodp, fods, fodt, gif, html, jpg, latex, mediawiki, met, odd, odg, odp, ods, odt, ooxml, otg, otp, ots, ott, pbm, pct, pdb, pdf, pgm, png, pot, potm, ppm, pps, ppt, pptx, psw, pwp, pxl, ras, rtf, sda, sdc, sdc3, sdc4, sdd, sdd3, sdd4, sdw, sdw3, sdw4, slk, stc, std, sti, stw, svg, svm, swf, sxc, sxd, sxd3, sxd5, sxi, sxw, text, tiff, txt, uop, uos, uot, vor, vor3, vor4, vor5, wmf, wps, xhtml, xls, xls5, xls95, xlsx, xlt, xlt5, xlt95, xpm  
-  `sudo apt-get install unoconv`
+  `sudo apt-get install unoconv libreoffice`  
+  Read more about this here: http://linuxsleuthing.blogspot.de/2012/01/unoconv-is-number-one.html
 
 The converter functions are in the [convert.py][convert] file.
 It is quite simple to write those: They take a file format like `"svg"` and the bytes of a

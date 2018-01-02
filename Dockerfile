@@ -8,7 +8,7 @@ RUN useradd app
 # Install packages from README
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#apt-get
 RUN apt-get -y update && \
-    apt-get -y install python3 python3-pip unoconv libreoffice && \
+    apt-get -y install python3 python3-pip librsvg2-bin ghostscript imagemagick unoconv libreoffice && \
     rm -rf /var/lib/apt/lists/*
 RUN python3 -m pip install --no-cache --upgrade pip
 RUN mkdir -p /app/printathpi/
