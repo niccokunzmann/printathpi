@@ -69,7 +69,7 @@ def print_files():
 def route_convert_to_pdf():
     file = request.files.getlist("files[]")[0]
     response.headers["Content-Type"] = "application/pdf"
-    response.headers["content-disposition"] ="attachment; filename=\"" + file.filename +"\""
+    response.headers["content-disposition"] ="attachment; filename=\"" + file.filename +".pdf\""
     content = file.file.read()
     result = convert(file.filename, content)
     assert result != content or file.filename.lower().endswith(".pdf")
