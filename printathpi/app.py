@@ -85,7 +85,7 @@ def get_source_redirect():
 @get('/printathpi.js')
 def printathpi_js():
     """Return the source of the print file."""
-    redirect("/static/printathpi.js")
+    return static_file("printathpi.js", root=STATIC_BASE_PATH)
 
 @get('/')
 def get_source_redirect():
