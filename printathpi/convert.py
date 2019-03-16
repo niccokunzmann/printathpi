@@ -47,7 +47,11 @@ def unoconv2pdf(file_format, content):
 
 def get_unoconv_conversions():
     """get unoconv and all supported formats"""
-    process = subprocess.Popen(["unoconv", "--show"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    try:
+        process = subprocess.Popen(["unoconv", "--show"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except FileNotFoundError:
+        # FileNotFoundError: [Errno 2] No such file or directory: 'unoconv'
+        return {}
     if process.wait() != 0:
         return {}
     documentation = process.stdout.read().decode()
