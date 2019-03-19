@@ -60,8 +60,10 @@ Different types of files can be converted.
 These are the installation instructions for those.
 
 - SVG  
-  `sudo apt-get install librsvg2-bin`  
-  Read more about this here: https://superuser.com/a/381128/164164
+  - `sudo apt-get install librsvg2-bin`  
+      Read more about this here: https://superuser.com/a/381128/164164
+  - or `sudo apt-get install inkscape`  
+      Read more about this here: https://superuser.com/a/506696/164164
 - JPG, JPEG, PNG  
   `sudo apt-get install ghostscript imagemagick`  
   Read more about this here: http://dev-random.net/convert-multiple-jpg-or-png-to-pdf-in-linux/
