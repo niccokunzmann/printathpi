@@ -6,17 +6,7 @@ import re
 def pdf2pdf(file_format, content):
     """Convert a pdf to a pdf file."""
     return content
-
-def svg2pdf(file_format, content):
-    """Convert an svg file to a pdf file.
     
-    This uses rsvg-convert.
-    """
-    with NamedTemporaryFile() as input_file:
-        input_file.write(content)
-        input_file.flush()
-        return subprocess.check_output(["rsvg-convert", "-f", "pdf", input_file.name])
-
 def png2pdf(file_format, content):
     """Convert a png or jpeg image"""
     with NamedTemporaryFile(suffix="." + file_format) as input_file:
@@ -64,11 +54,35 @@ def get_unoconv_conversions():
 conversions = get_unoconv_conversions()
 conversions.update({
     "pdf":  pdf2pdf,
-    "svg":  svg2pdf,
     "jpg":  jpg2pdf,
     "jpeg": lambda *args: conversions["jpg"](*args),
     "png":  png2pdf,
 })
+
+if subprocess.call(["which", "inkscape"]) == 0:
+    def inscapesvg2pdf(file_format, content):
+        """Convert an svg file to a pdf file.
+        
+        This uses inkscape.
+        """
+        with NamedTemporaryFile() as input_file:
+            input_file.write(content)
+            input_file.flush()
+            with NamedTemporaryFile() as output_file:
+                subprocess.check_call(["inkscape", "-z", "-f", input_file.name, "-A", output_file.name])
+                return output_file.read()
+    svg2pdf = conversions["svg"] = inscapesvg2pdf
+elif subprocess.call(["which", "rsvg-convert"]) == 0:
+    def rsvg2pdf(file_format, content):
+        """Convert an svg file to a pdf file.
+        
+        This uses rsvg-convert.
+        """
+        with NamedTemporaryFile() as input_file:
+            input_file.write(content)
+            input_file.flush()
+            return subprocess.check_output(["rsvg-convert", "-f", "pdf", input_file.name])
+    svg2pdf = conversions["svg"] = rsvg2pdf
 
 def convert(filename, content):
     """Convert the file content to pdf.
